@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { supabase } from './src/lib/supabase';
+import { FlatList, Platform, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { supabase } from '../lib/supabase';
 import { useEffect, useState } from 'react';
-import MovieItem from './src/components/MovieItem';
+import MovieItem from '../components/MovieItem';
 
 export default function App() {
 
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<{}[]>([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -20,7 +20,7 @@ export default function App() {
   return (
     <View style={styles.container}>
 
-      <SafeAreaView>
+      <SafeAreaView >
         <FlatList data={movies} renderItem={MovieItem} />
       </SafeAreaView>
 
