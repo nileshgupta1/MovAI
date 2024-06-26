@@ -12,13 +12,23 @@ export default function App() {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      let { data: movies, error } = await supabase.from('movies').select('*').range(0, 25);
+      let { data: movies, error } = await supabase.from('movies').select('*').range(0, 100);
       if (movies) setMovies(movies);
     }
     fetchMovies();
   }, []);
 
-  const onPress = () => {
+  const onPress = async () => {
+    // const {data} =  await supabase.functions.invoke('embed', {body: {input: query}});
+    // const { data:movies } = await supabase.rpc('match_movies', {
+    //   query_embedding: data.embedding,
+    //   match_threshold: 0.78,
+    //   match_count: 20
+    // });
+    // setMovies(movies);
+    const { data: movies } = await supabase.from('movies').select('*').textSearch('title', query);
+    if (movies?.length)
+      setMovies(movies);
     setQuery('');
   }
 
